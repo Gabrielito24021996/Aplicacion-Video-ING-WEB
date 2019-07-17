@@ -28,10 +28,10 @@ Update-Database (nos actualizara la base de datos)
     }
 
 
-
- +Detalle 
- public class Detalle
-    {
++Detalle
+ 
+    public class Detalle
+     {
         public int detalleid { get; set; }
 
         public Cotizacion cotizacion { get; set; }
@@ -48,7 +48,7 @@ Update-Database (nos actualizara la base de datos)
  
  +Cotizacion
  
- [Table("Cotizacion")]
+    [Table("Cotizacion")]
     public class Cotizacion
     {
         
@@ -66,8 +66,8 @@ Update-Database (nos actualizara la base de datos)
  
 Y crearemos un extra con el nombre CotizacionViewModel que nos servira la cotizacion con la lista de detalle de productos y poder gurdar en la base la cotizacion con su detalle.
  
-public class CotizacionViewModel
-    {
+    public class CotizacionViewModel
+      {
 
         public DateTime fecha { get; set; }
 
@@ -86,9 +86,9 @@ Despues pasaremos a la creacion del de los controladores, pero para producto, Mi
 CRUD automatico como se logra ver en el video. NO OLVIDEN PRIMERO COMPILAR EL  PROYECTO PARA QUE LA CREACION DEL CONTROLLER CON SUS VISTAS SEA EL CORRECTO.
   
   
-  +Producto Controller
++Producto Controller
   
-  [Authorize]
+    [Authorize]
     public class ProductosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -230,10 +230,10 @@ CRUD automatico como se logra ver en el video. NO OLVIDEN PRIMERO COMPILAR EL  P
         }
     }
     
-  y ahora crearemos el Cotizacion Controller, para hacer uso de loggin que ocupamos en el inicion en las funciones que queremos que solo puedan acceder las personas registradas tenemos que agregar un [Authorize] en las diferentes funciones creadas en el controlador que queremos controlar:
+y ahora crearemos el Cotizacion Controller, para hacer uso de loggin que ocupamos en el inicion en las funciones que queremos que solo puedan acceder las personas registradas tenemos que agregar un [Authorize] en las diferentes funciones creadas en el controlador que queremos controlar:
   
-   public class CotizacionsController : Controller
-    {
+    public class CotizacionsController : Controller
+       {
         private readonly ApplicationDbContext _context;
         public static List<Detalle> detalles = new List<Detalle>();
         public static double total = 0;
@@ -356,25 +356,26 @@ Entonces tendremos que tener dos vistas para Cotizacion
 Unas que sera el Create que nos permitira ver la Cotizacion creada y otra que sera Index para poder ver las cotizaciones creadas.
 
 +Create
-@model WebApplicationProductos.Models.CotizacionViewModel
 
-@{
-    ViewData["Title"] = "Create";
-}
+      @model WebApplicationProductos.Models.CotizacionViewModel
 
-    <h2>Cotizador</h2>
+      @{
+          ViewData["Title"] = "Create";
+      }
 
-<hr />
-  @Html.Raw(TempData["msg"])
+          <h2>Cotizador</h2>
 
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="fecha" class="control-label"></label>
+      <hr />
+        @Html.Raw(TempData["msg"])
 
-                <input asp-for="fecha"    class="form-control" type="date" />
+      <div class="row">
+          <div class="col-md-4">
+              <form method="post">
+                  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                  <div class="form-group">
+                      <label asp-for="fecha" class="control-label"></label>
+
+                      <input asp-for="fecha"    class="form-control" type="date" />
                 <span asp-validation-for="fecha"  class="text-danger"></span>
             </div>
 
@@ -441,135 +442,135 @@ Unas que sera el Create que nos permitira ver la Cotizacion creada y otra que se
 
         </form>
     </div>
-</div>
+    </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
 
 +Index
 
-@model IEnumerable<WebApplicationProductos.Models.Cotizacion>
+    @model IEnumerable<WebApplicationProductos.Models.Cotizacion>
 
-@{
-    ViewData["Title"] = "Index";
-}
+    @{
+        ViewData["Title"] = "Index";
+    }
 
-<h2>Listado de Cotizaciones</h2>
+    <h2>Listado de Cotizaciones</h2>
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.cotizacionid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.total)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.cotizacionid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.fecha)
-            </td>
-            <td>
-               $ @Html.DisplayFor(modelItem => item.total)
-            </td>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.cotizacionid)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fecha)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.total)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cotizacionid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fecha)
+                </td>
+                <td>
+                   $ @Html.DisplayFor(modelItem => item.total)
+                </td>
 
-        </tr>
-}
-    </tbody>
-</table>
+            </tr>
+    }
+        </tbody>
+    </table>
 
 Por ultimo tenemos el Layaout que e sla pagina principal y la que nos dara el acceso a las diferentes funciones creadas por nosotros..Siempre debemos poner los nombres correctos de los Controllers si la palabra Controller al final y tambien apuntando a la vista, como podemos ver en el navbar-collapse collapse.
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - VideoIngWebYoutube</title>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - VideoIngWebYoutube</title>
 
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
-</head>
-<body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">VideoIngWebYoutube</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Productos" asp-action="Index">Productos</a></li>
-                    <li><a asp-area="" asp-controller="Cotizacions" asp-action="Create">Cotizador</a></li>
-                    <li><a asp-area="" asp-controller="Cotizacions" asp-action="Index">Listado Cotizaciones</a></li>
+        <environment include="Development">
+            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+            <link rel="stylesheet" href="~/css/site.css" />
+        </environment>
+        <environment exclude="Development">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+                  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+            <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        </environment>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">VideoIngWebYoutube</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a asp-area="" asp-controller="Productos" asp-action="Index">Productos</a></li>
+                        <li><a asp-area="" asp-controller="Cotizacions" asp-action="Create">Cotizador</a></li>
+                        <li><a asp-area="" asp-controller="Cotizacions" asp-action="Index">Listado Cotizaciones</a></li>
 
-                </ul>
-                <partial name="_LoginPartial" />
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
             </div>
+        </nav>
+
+        <partial name="_CookieConsentPartial" />
+
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; 2019 - VideoIngWebYoutube</p>
+            </footer>
         </div>
-    </nav>
 
-    <partial name="_CookieConsentPartial" />
+        <environment include="Development">
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+        </environment>
+        <environment exclude="Development">
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+            </script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
+            </script>
+            <script src="~/js/site.min.js" asp-append-version="true"></script>
+        </environment>
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2019 - VideoIngWebYoutube</p>
-        </footer>
-    </div>
-
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-        </script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
-
-    @RenderSection("Scripts", required: false)
-</body>
-</html>
+        @RenderSection("Scripts", required: false)
+    </body>
+    </html>
